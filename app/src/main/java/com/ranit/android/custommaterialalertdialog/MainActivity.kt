@@ -4,13 +4,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : AppCompatActivity() {
     private lateinit var floatingActionButton : FloatingActionButton
+    private lateinit var lottieView : LottieAnimationView
+    private lateinit var cardView : CardView
+    private lateinit var nameTextView : TextView
+    private lateinit var phoneNumberTextView : TextView
+    private lateinit var addressTextView : TextView
     private lateinit var customAlertDialogView : View
     private lateinit var nameTextField : TextInputLayout
     private lateinit var phoneNumberTextField : TextInputLayout
@@ -21,9 +29,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        floatingActionButton = findViewById(R.id.floating_action_button)
-        // Create a MaterialAlertDialogBuilder object instance
-        materialAlertDialogBuilder = MaterialAlertDialogBuilder(this)
+        initializeViews()
 
         floatingActionButton.setOnClickListener(View.OnClickListener {
             // Inflate Custom alert dialog view
@@ -35,12 +41,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * Method to initialize all views
+     */
+    private fun initializeViews() {
+        // Create a MaterialAlertDialogBuilder object instance
+        materialAlertDialogBuilder = MaterialAlertDialogBuilder(this)
+
+        floatingActionButton = findViewById(R.id.floating_action_button)
+        lottieView = findViewById(R.id.no_data_lottie_animation)
+        cardView = findViewById(R.id.address_details_card)
+        nameTextView = findViewById(R.id.name_text_view)
+        phoneNumberTextView = findViewById(R.id.phone_number_text_view)
+        addressTextView = findViewById(R.id.address_text_view)
+    }
+
+    /**
      * Method to launch custom alert dialog
      * Steps:
      * 1. Map views with the layout
      * 2. Set the custom view to the materialAlertDialogBuilder instance
      * 3. Set the additional parameters to be displayed such as 'setTitle', 'setMessage'
-     * 4. Extract the text from the editText fields
+     * 4. Extract the text from the editText fields and performing basic validation
      * 5. Display data as required
      * 6. Call 'show()' on the materialAlertDialogBuilder instance
      *
@@ -63,7 +84,19 @@ class MainActivity : AppCompatActivity() {
                 val phoneNumber = phoneNumberTextField.editText?.text.toString()
                 val address = addressTextField.editText?.text.toString()
 
-                displayMessage("Address added successfully!")
+                val isInputValid : Boolean = validateInput(name, phoneNumber, address)
+
+                if (isInputValid) {
+                    lottieView.visibility = View.GONE
+                    cardView.visibility = View.VISIBLE
+
+                    nameTextView.text = name
+                    phoneNumberTextView.text = phoneNumber
+                    addressTextView.text = address
+                    displayMessage("Address added successfully!")
+                } else {
+                    displayMessage("Fields must not be left blank!")
+                }
                 dialog.dismiss()
             }
             .setNegativeButton("Cancel") { dialog, _ ->
@@ -71,6 +104,17 @@ class MainActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    /**
+     * Method to validate user input (Basic validation)
+     */
+    private fun validateInput(name : String, phoneNumber : String, address : String) : Boolean {
+        if (name.trim().isNotEmpty() && phoneNumber.trim().isNotEmpty()
+            && address.trim().isNotEmpty()) {
+            return true
+        }
+        return false
     }
 
     /**

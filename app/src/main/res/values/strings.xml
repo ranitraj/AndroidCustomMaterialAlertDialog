@@ -3,4 +3,5 @@
     <string name="enter_name">Enter name</string>
     <string name="enter_address">Enter address</string>
     <string name="enter_mobile">Enter mobile number</string>
+    <string name="address_details">Address Details</string>
 </resources>

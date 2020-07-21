@@ -6,4 +6,5 @@
     <color name="secondary_color_scheme">#CDDC39</color>
     <color name="secondary_color_scheme_dark">#99AA00</color>
     <color name="card_background">#C5E1A5</color>
+    <color name="error_color">#F44336</color>
 </resources>
