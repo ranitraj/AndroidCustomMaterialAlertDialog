@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name_text_field"
         app:startIconDrawable="@drawable/ic_phone_24"
-        android:hint="@string/enter_name"
+        android:hint="@string/enter_mobile"
         android:textColorHint="@color/colorPrimaryDark"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
