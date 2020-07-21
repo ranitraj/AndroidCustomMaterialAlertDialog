@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Shopping App</string>
+    <string name="enter_name">Enter name</string>
+    <string name="enter_address">Enter address</string>
 </resources>
